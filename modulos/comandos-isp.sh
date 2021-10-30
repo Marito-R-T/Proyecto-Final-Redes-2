@@ -13,7 +13,7 @@ REGLA="0Xffff"
 
 #insertar modulo ifb, asignando el numero de interfaces virutales
 #que se necesita por defecto es 2
-IFB="sudo modprobe ifb numifbs=1"
+IFB="modprobe ifb numifbs=1"
 
 #limpiar interfaces
 C1="ip link set dev ${INTERFACEOUT} up"
