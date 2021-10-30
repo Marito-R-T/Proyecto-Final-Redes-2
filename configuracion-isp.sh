@@ -27,11 +27,11 @@ if [[ $opc == 1 ]]; then
     echo 'ejecutando c1'
   $C1
     echo 'ejecutando c2'
-  $C2
+  /usr/sbin/tc qdisc del dev ${INTERFACEIN} root 2>/dev/null
     echo 'ejecutando c3'
-  $C3
+  /usr/sbin/tc qdisc del dev ${INTERFACEIN} ingress 2>/dev/null
     echo 'ejecutando c4'
-  $C4
+  /usr/sbin/tc qdisc del dev ${INTERFACEOUT} root 2>/dev/null
     echo 'ejecutando c5'
   $C5
     echo 'ejecutando c6'
