@@ -27,13 +27,13 @@ C6="/usr/sbin/tc filter add dev ${INTERFACEIN} parent ffff: protocol ip u32 matc
 
 #creando enlace para bajada
 COMANDO_IN_ROOT="/usr/sbin/tc  qdisc add dev ${INTERFACEIN} root handle 1: htb"
-COMANDO_IN_ENLACE="/usr/sbin/tc  class add dev ${INTERFACEIN} parent 1: classid 1:10 htb rate 2000kbit ceil 2000kbit"
+COMANDO_IN_ENLACE="/usr/sbin/tc  class add dev ${INTERFACEIN} parent 1: classid 1:10 htb rate 1000kbit ceil 1000kbit"
 COMANDO_EXTRA_IN="/usr/sbin/tc qdisc add dev ${INTERFACEIN} parent 1:10 handle 10: sfq perturb 10"
 
 #creando enlace para subida
 
 COMANDO_OUT_ROOT="/usr/sbin/tc  qdisc add dev ${INTERFACEOUT} root handle 1: htb"
-COMANDO_OUT_ENLACE="/usr/sbin/tc  class add dev ${INTERFACEOUT} parent 1: classid 1:10 htb rate 50kbit ceil 50kbit"
+COMANDO_OUT_ENLACE="/usr/sbin/tc  class add dev ${INTERFACEOUT} parent 1: classid 1:10 htb rate 100kbit ceil 100kbit"
 COMANDO_EXTRA_OUT="/usr/sbin/tc qdisc add dev ${INTERFACEOUT} parent 1:10 handle 10: sfq perturb 10"
 
 #asignando ip a enlace
