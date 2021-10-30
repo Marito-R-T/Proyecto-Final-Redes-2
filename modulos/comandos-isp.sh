@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-INTERFACEIN="enp7s0"
+INTERFACEIN="enp0s8"
 INTERFACEOUT="ifb0"
 IP="${isp}0.${isp}0.${isp}0.1"
 
