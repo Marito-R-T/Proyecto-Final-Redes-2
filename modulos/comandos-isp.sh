@@ -14,19 +14,31 @@ REGLA="0Xffff"
 
 ejecutarComandos() {
   echo "empieza a ejecutar comandos"
+  #insertar modulo ifb, asignando el numero de interfaces virutales
+  #que se necesita por defecto es 2
   modprobe ifb numifbs=1
+
+  #limpiar interfaces
   ip link set dev ${INTERFACEOUT} up
   /usr/sbin/tc qdisc del dev ${INTERFACEIN} root 2>/dev/null
   /usr/sbin/tc qdisc del dev ${INTERFACEIN} ingress 2>/dev/null
   /usr/sbin/tc qdisc del dev ${INTERFACEOUT} root 2>/dev/null
+
+  #habilitar interfaz para upload
   /usr/sbin/tc qdisc add dev ${INTERFACEIN} handle ffff: ingress
   /usr/sbin/tc filter add dev ${INTERFACEIN} parent ffff: protocol ip u32 match u32 0 0 action mirred egress redirect dev ${INTERFACEOUT}
-  /usr/sbin/tc  qdisc add dev ${INTERFACEIN} root handle 1: htb
+
+  #creando enlace para bajada
+  /usr/sbin/tc  qdisc add dev ${INTERFACEIN} root handle 1: htb default 10
   /usr/sbin/tc  class add dev ${INTERFACEIN} parent 1: classid 1:10 htb rate 1000kbit ceil 1000kbit
   /usr/sbin/tc qdisc add dev ${INTERFACEIN} parent 1:10 handle 10: sfq perturb 10
-  /usr/sbin/tc  qdisc add dev ${INTERFACEOUT} root handle 1: htb
+
+  #creando enlace para subida
+  /usr/sbin/tc  qdisc add dev ${INTERFACEOUT} root handle 1: htb default 10
   /usr/sbin/tc  class add dev ${INTERFACEOUT} parent 1: classid 1:10 htb rate 100kbit ceil 100kbit
   /usr/sbin/tc qdisc add dev ${INTERFACEOUT} parent 1:10 handle 10: sfq perturb 10
+
+  #asignando ip a enlace
   /usr/sbin/tc ${IN} ${IP} flowid 1:10
   /usr/sbin/tc ${OUT} ${IP} flowid 1:10
 }
