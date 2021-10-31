@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # squid proxy's IP address (which is attached to eth0)
-SQUID_SERVER=`ifconfig eth0 | sed -ne 's/.*inet addr:([^ ]*).*/1/p'`
+SQUID_SERVER=`ifconfig enp0s9 | sed -ne 's/.*inet addr:([^ ]*).*/1/p'`
 
 # interface connected to WAN
 INTERNET="enp0s9"
@@ -37,3 +37,10 @@ iptables --append FORWARD --in-interface $INTERNET -j ACCEPT
 
 # enable IP forwarding for proxy
 echo 1 > /proc/sys/net/ipv4/ip_forward
+
+
+# redirect HTTP to locally installed Squid instance
+#iptables -t nat -A PREROUTING -i ens160 -p tcp --dport 80 -j REDIRECT --to-ports 3126
+
+# redirect HTTPS to locally installed Squid instance
+#iptables -t nat -A PREROUTING -i ens160 -p tcp --dport 443 -j REDIRECT --to-ports 3127
