@@ -26,10 +26,13 @@ modprobe ip_conntrack_ftp
 
 # define necessary redirection for incoming HTTP traffic (e.g., 80)
 iptables -t nat -A PREROUTING -i $LAN_IN -p tcp --dport 80 -j REDIRECT --to-port $SQUID_PORT
+iptables -t nat -A PREROUTING -i $LAN_IN -p tcp --dport 443 -j REDIRECT --to-port $SQUID_PORT
 
 # forward locally generated http traffic to Squid
 iptables -t nat -A OUTPUT -p tcp --dport 80 -m owner --uid-owner proxy -j ACCEPT
 iptables -t nat -A OUTPUT -p tcp --dport 80 -j REDIRECT --to-ports $SQUID_PORT
+iptables -t nat -A OUTPUT -p tcp --dport 443 -m owner --uid-owner proxy -j ACCEPT
+iptables -t nat -A OUTPUT -p tcp --dport 443 -j REDIRECT --to-ports $SQUID_PORT
 
 # forward the rest of non-HTTP traffic
 iptables --table nat --append POSTROUTING --out-interface $INTERNET -j MASQUERADE
