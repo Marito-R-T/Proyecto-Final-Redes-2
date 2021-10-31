@@ -30,12 +30,20 @@ ejecutarComandos() {
 
   #creando enlace para bajada
   /usr/sbin/tc qdisc add dev ${INTERFACEIN} root handle 1: htb default 10
-  /usr/sbin/tc class add dev ${INTERFACEIN} parent 1: classid 1:10 htb rate 1000kbit ceil 1000kbit
+  if [[ $isp == 1 ]]; then
+    /usr/sbin/tc class add dev ${INTERFACEIN} parent 1: classid 1:10 htb rate 1024kbit ceil 1024kbit
+  elif [[ $isp == 2 ]]; then
+    /usr/sbin/tc class add dev ${INTERFACEIN} parent 1: classid 1:10 htb rate 2048kbit ceil 2048kbit
+  fi
   /usr/sbin/tc qdisc add dev ${INTERFACEIN} parent 1:10 handle 10: sfq perturb 10
 
   #creando enlace para subida
   /usr/sbin/tc  qdisc add dev ${INTERFACEOUT} root handle 1: htb default 10
-  /usr/sbin/tc  class add dev ${INTERFACEOUT} parent 1: classid 1:10 htb rate 100kbit ceil 100kbit
+  if [[ $isp == 1 ]]; then
+    /usr/sbin/tc  class add dev ${INTERFACEOUT} parent 1: classid 1:10 htb rate 1024kbit ceil 1024kbit
+  elif [[ $isp == 2 ]]; then
+    /usr/sbin/tc  class add dev ${INTERFACEOUT} parent 1: classid 1:10 htb rate 512kbit ceil 512kbit
+  fi
   /usr/sbin/tc qdisc add dev ${INTERFACEOUT} parent 1:10 handle 10: sfq perturb 10
 
   #asignando ip a enlace
