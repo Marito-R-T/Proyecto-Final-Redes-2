@@ -13,6 +13,7 @@ REGLA="0Xffff"
 
 
 ejecutarComandos() {
+  echo "empieza a ejecutar comandos"
   modprobe ifb numifbs=1
   ip link set dev ${INTERFACEOUT} up
   /usr/sbin/tc qdisc del dev ${INTERFACEIN} root 2>/dev/null
