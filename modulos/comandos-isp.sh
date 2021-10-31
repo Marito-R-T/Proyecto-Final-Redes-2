@@ -6,8 +6,8 @@ INTERFACEOUT="ifb0"
 IP="${isp}0.${isp}0.${isp}0.1"
 
 #filtros para aplicar el ancho de banda de subida como de bajada
-IN="/usr/sbin/tc filter add dev ${INTERFACEIN} parent 1:0 protocol ip prio 1 u32 match ip dst"
-OUT="/usr/sbin/tc filter add dev ${INTERFACEOUT} parent 1:0 protocol ip prio 1 u32 match ip src"
+IN="filter add dev ${INTERFACEIN} parent 1:0 protocol ip prio 1 u32 match ip dst"
+OUT="filter add dev ${INTERFACEOUT} parent 1:0 protocol ip prio 1 u32 match ip src"
 PUERTO="match ip sport"
 REGLA="0Xffff"
 
