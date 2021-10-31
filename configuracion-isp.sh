@@ -20,7 +20,6 @@ read opc
 echo $IP
 
 if [[ $opc == 1 ]]; then
-  echo 'ejecutando ispup'
   $ISPUP
   ejecutarComandos
 fi
