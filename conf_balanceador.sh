@@ -1,9 +1,9 @@
 #!/bin/bash
 
-ip route add 10.10.10.0/24 dev enp0s8 src 10.10.10.2 table isp1
+ip route add 10.10.10.0/24 dev enp0s3 src 10.10.10.2 table isp1
 ip route add default via 10.10.10.1 table isp1
 
-ip route add 20.20.20.0/24 dev enp0s9 src 20.20.20.2 table isp2
+ip route add 20.20.20.0/24 dev enp0s8 src 20.20.20.2 table isp2
 ip route add default via 20.20.20.1 table isp2
 
 
