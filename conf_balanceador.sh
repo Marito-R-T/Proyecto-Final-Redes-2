@@ -47,10 +47,13 @@ ejecutarDinamico() {
   while read -r line; do
     readarray -d , -t PARAMS <<< $line
     if [[ ${PARAMS[3]} == 'ISP1' ]]; then
+      echo "iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF1 -j MASQUERADE"
       iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF1 -j MASQUERADE
     elif [[ ${PARAMS[3]} == 'ISP2' ]]; then
+      echo "iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF2 -j MASQUERADE"
       iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF2 -j MASQUERADE
     else
+      echo "iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -j MASQUERADE"
       iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -j MASQUERADE
     fi
   done < '/home/marito/LBrules.txt'
