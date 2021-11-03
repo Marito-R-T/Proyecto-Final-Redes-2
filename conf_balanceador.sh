@@ -49,6 +49,7 @@ ejecutarDinamico() {
     if [[ ${PARAMS[3]} == 'ISP1' ]]; then
       echo "iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF1 -j MASQUERADE"
       iptables -t nat -A POSTROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF1 -j MASQUERADE
+      iptables -A FORWARD -s ${PARAMS[0]} -p tcp --dport ${PARAMS} -j ACCEPT
     elif [[ ${PARAMS[3]} == 'ISP2' ]]; then
       echo "iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF2 -j MASQUERADE"
       iptables -t nat -A POSTROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF2 -j MASQUERADE
@@ -68,8 +69,8 @@ iptables -t mangle -A PREROUTING -m statistic --mode random --probability $PROB2
 iptables -t mangle -A PREROUTING -j CONNMARK --save-mark
 
 # NAT MASQUERADE
-# iptables -t nat -A POSTROUTING -j MASQUERADE
-ejecutarDinamico
+iptables -t nat -A POSTROUTING -j MASQUERADE
+# ejecutarDinamico
 
 # IP RULES PRIO
 ip rule add fwmark 20 table isp2 prio 33000
