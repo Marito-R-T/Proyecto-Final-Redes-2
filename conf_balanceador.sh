@@ -19,7 +19,8 @@ while IFS= read -r line; do
     ISP2=${line:5}
   fi
 done < '/home/marito/pesos.txt'
-
+echo $ISP1
+echo $ISP2
 PROB1=$(echo "scale=2; $ISP1 / ($ISP1 + $ISP2)" | bc)
 PROB2=$(echo "scale=2; 1 - $PROB1" | bc)
 
