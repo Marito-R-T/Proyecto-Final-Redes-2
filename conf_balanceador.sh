@@ -23,6 +23,8 @@ echo $ISP1
 echo $ISP2
 PROB1=$(echo "scale=2; $ISP1 / ($ISP1 + $ISP2)" | bc)
 PROB2=$(echo "scale=2; 1 - $PROB1" | bc)
+echo $PROB1
+echo $PROB2
 
 ip route del default
 ip route del $WAN1 dev $IF1 src $IP1 table $T1
