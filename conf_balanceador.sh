@@ -61,7 +61,7 @@ ejecutarDinamico() {
 iptables -t mangle -A PREROUTING -j CONNMARK --restore-mark
 iptables -t mangle -A PREROUTING -m mark ! --mark 0 -j ACCEPT
 iptables -t mangle -A PREROUTING -j MARK --set-mark 10
-iptables -t mangle -A PREROUTING -m statistic --mode random --probability $var -j MARK --set-mark 20
+iptables -t mangle -A PREROUTING -m statistic --mode random --probability $PROB2 -j MARK --set-mark 20
 iptables -t mangle -A PREROUTING -j CONNMARK --save-mark
 
 # NAT MASQUERADE
