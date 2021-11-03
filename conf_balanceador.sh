@@ -43,12 +43,12 @@ iptables -t mangle -F
 ejecutarDinamico() {
   while read -r line; do
     readarray -d , -t PARAMS <<< $line
-    if [[ PARAMS[3] == 'ISP1' ]]; then
-      iptables -t nat -A PREROUTING -s PARAMS[0] -p PARAMS[2] --dport PARAMS[1] -o $IF1 -j MASQUERADE
-    elif [[ PARAMS[3] == 'ISP2' ]]; then
-      iptables -t nat -A PREROUTING -s PARAMS[0] -p PARAMS[2] --dport PARAMS[1] -o $IF2 -j MASQUERADE
+    if [[ ${PARAMS[3]} == 'ISP1' ]]; then
+      iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF1 -j MASQUERADE
+    elif [[ ${PARAMS[3]} == 'ISP2' ]]; then
+      iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -o $IF2 -j MASQUERADE
     else
-      iptables -t nat -A PREROUTING -s PARAMS[0] -p PARAMS[2] --dport PARAMS[1] -j MASQUERADE
+      iptables -t nat -A PREROUTING -s ${PARAMS[0]} -p ${PARAMS[2]} --dport ${PARAMS[1]} -j MASQUERADE
     fi
   done < '/home/marito/LBrules.txt'
 }
