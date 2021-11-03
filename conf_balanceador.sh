@@ -62,7 +62,8 @@ iptables -t mangle -A PREROUTING -m statistic --mode random --probability $var -
 iptables -t mangle -A PREROUTING -j CONNMARK --save-mark
 
 # NAT MASQUERADE
-iptables -t nat -A POSTROUTING -j MASQUERADE
+# iptables -t nat -A POSTROUTING -j MASQUERADE
+ejecutarDinamico
 
 # IP RULES PRIO
 ip rule add fwmark 20 table isp2 prio 33000
